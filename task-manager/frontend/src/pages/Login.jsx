@@ -96,7 +96,7 @@ const Login = () => {
             <p className="text-spotify-text text-base">
               Don't have an account?{' '}
               <Link to="/signup" className="font-bold text-white hover:text-spotify-green transition-colors underline hover:no-underline underline-offset-2">
-                Sign up for TaskFlow
+                Sign up
               </Link>
             </p>
           </div>
