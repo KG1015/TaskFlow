@@ -5,6 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import TaskCard from '../components/TaskCard';
 import { LogOut, Plus, ListTodo } from 'lucide-react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+
 const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +21,7 @@ const Dashboard = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:5001/api/tasks');
+      const response = await axios.get(`${API_URL}/api/tasks`);
       setTasks(response.data);
       setError('');
     } catch (err) {
@@ -43,7 +45,7 @@ const Dashboard = () => {
     if (!newTaskTitle.trim()) return;
 
     try {
-      const response = await axios.post('http://localhost:5001/api/tasks', {
+      const response = await axios.post(`${API_URL}/api/tasks`, {
         title: newTaskTitle,
         description: newTaskDesc,
       });
@@ -58,7 +60,7 @@ const Dashboard = () => {
 
   const handleUpdateStatus = async (id, newStatus) => {
     try {
-      const response = await axios.put(`http://localhost:5001/api/tasks/${id}`, {
+      const response = await axios.put(`${API_URL}/api/tasks/${id}`, {
         status: newStatus,
       });
       setTasks(tasks.map(t => t.id === id ? response.data : t));
@@ -69,7 +71,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/tasks/${id}`);
+      await axios.delete(`${API_URL}/api/tasks/${id}`);
       setTasks(tasks.filter(t => t.id !== id));
     } catch (err) {
       setError('Failed to delete task');
