@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import TaskCard from '../components/TaskCard';
-import { LogOut, Plus, ListTodo } from 'lucide-react';
+import { LogOut, Plus, Search } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
@@ -87,63 +87,56 @@ const Dashboard = () => {
   const completedTasks = tasks.filter(t => t.status === 'Completed');
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-spotify-black text-white font-sans flex flex-col">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-2">
-              <div className="bg-indigo-600 p-2 rounded-lg">
-                <ListTodo className="h-5 w-5 text-white" />
-              </div>
-              <h1 className="text-xl font-bold text-slate-800">TaskFlow</h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-slate-600 hidden sm:block">{user?.email}</span>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors"
-              >
-                <LogOut className="h-4 w-4" />
-                Logout
-              </button>
-            </div>
-          </div>
+      <nav className="bg-spotify-black sticky top-0 z-10 px-6 py-4 flex justify-between items-center">
+        <h1 className="text-2xl font-black tracking-tighter">TaskFlow</h1>
+        <div className="flex items-center gap-6">
+          <span className="text-sm font-bold text-spotify-text hover:text-white transition-colors cursor-pointer hidden sm:block">
+            {user?.email}
+          </span>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 text-sm font-bold text-white bg-spotify-black hover:scale-105 transition-transform"
+            title="Log out"
+          >
+            <LogOut className="h-5 w-5" />
+          </button>
         </div>
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-8">
         
-        {/* Header Action */}
-        <div className="flex justify-between items-end mb-8">
+        {/* Header Section */}
+        <div className="bg-gradient-to-b from-[#282828] to-spotify-black p-8 rounded-xl mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 shadow-2xl">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">Your Tasks</h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <h2 className="text-5xl font-black tracking-tighter mb-2">Good morning</h2>
+            <p className="text-spotify-text font-medium text-lg">
               You have {pendingTasks.length} pending task{pendingTasks.length !== 1 ? 's' : ''}.
             </p>
           </div>
           {!isAdding && (
             <button
               onClick={() => setIsAdding(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+              className="flex items-center gap-2 px-8 py-3.5 bg-spotify-green text-black font-bold rounded-full hover:bg-spotify-hover hover:scale-105 transition-all"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-5 w-5" />
               Add Task
             </button>
           )}
         </div>
 
         {error && (
-          <div className="mb-6 bg-red-50 text-red-600 p-4 rounded-lg text-sm border border-red-100">
+          <div className="mb-6 bg-red-500/10 text-red-400 p-4 rounded-md text-sm font-medium border border-red-500/20">
             {error}
           </div>
         )}
 
         {/* Add Task Form */}
         {isAdding && (
-          <div className="mb-8 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-            <h3 className="text-lg font-medium text-slate-800 mb-4">Create New Task</h3>
+          <div className="mb-10 bg-spotify-base p-6 rounded-md shadow-2xl">
+            <h3 className="text-xl font-bold text-white mb-6">Create New Task</h3>
             <form onSubmit={handleCreateTask}>
               <div className="space-y-4">
                 <div>
@@ -153,7 +146,7 @@ const Dashboard = () => {
                     placeholder="Task title"
                     value={newTaskTitle}
                     onChange={(e) => setNewTaskTitle(e.target.value)}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow"
+                    className="w-full px-4 py-3 bg-spotify-highlight border-none rounded-sm focus:ring-1 focus:ring-white outline-none transition-shadow text-white placeholder-spotify-text font-medium"
                   />
                 </div>
                 <div>
@@ -162,22 +155,22 @@ const Dashboard = () => {
                     rows="3"
                     value={newTaskDesc}
                     onChange={(e) => setNewTaskDesc(e.target.value)}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-shadow resize-none"
+                    className="w-full px-4 py-3 bg-spotify-highlight border-none rounded-sm focus:ring-1 focus:ring-white outline-none transition-shadow resize-none text-white placeholder-spotify-text font-medium"
                   ></textarea>
                 </div>
-                <div className="flex gap-3 justify-end">
+                <div className="flex gap-3 justify-end pt-4 border-t border-spotify-highlight">
                   <button
                     type="button"
                     onClick={() => setIsAdding(false)}
-                    className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                    className="px-6 py-2.5 text-white font-bold hover:scale-105 transition-transform"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                    className="px-8 py-2.5 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform"
                   >
-                    Save Task
+                    Save
                   </button>
                 </div>
               </div>
@@ -186,16 +179,16 @@ const Dashboard = () => {
         )}
 
         {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+          <div className="flex justify-center py-20">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-spotify-green"></div>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-10">
             {/* Pending Tasks */}
             {pendingTasks.length > 0 && (
               <section>
-                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Pending</h3>
-                <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-white mb-6">Pending</h3>
+                <div className="grid gap-3">
                   {pendingTasks.map(task => (
                     <TaskCard 
                       key={task.id} 
@@ -211,8 +204,8 @@ const Dashboard = () => {
             {/* Completed Tasks */}
             {completedTasks.length > 0 && (
               <section>
-                <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">Completed</h3>
-                <div className="space-y-3">
+                <h3 className="text-2xl font-bold text-white mb-6">Completed</h3>
+                <div className="grid gap-3 opacity-80 hover:opacity-100 transition-opacity">
                   {completedTasks.map(task => (
                     <TaskCard 
                       key={task.id} 
@@ -226,16 +219,15 @@ const Dashboard = () => {
             )}
 
             {tasks.length === 0 && !isAdding && (
-              <div className="text-center py-16 bg-white rounded-xl border border-dashed border-slate-300">
-                <ListTodo className="mx-auto h-12 w-12 text-slate-300" />
-                <h3 className="mt-4 text-lg font-medium text-slate-900">No tasks yet</h3>
-                <p className="mt-1 text-slate-500">Get started by creating a new task.</p>
+              <div className="text-center py-24 bg-spotify-base rounded-md">
+                <Search className="mx-auto h-16 w-16 text-spotify-text mb-6" />
+                <h3 className="text-2xl font-bold text-white mb-2">No tasks found</h3>
+                <p className="text-spotify-text font-medium mb-8">It's pretty empty here. Let's add something to your list.</p>
                 <button
                   onClick={() => setIsAdding(true)}
-                  className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 transition-colors"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform"
                 >
-                  <Plus className="h-4 w-4" />
-                  Add your first task
+                  Create your first task
                 </button>
               </div>
             )}
