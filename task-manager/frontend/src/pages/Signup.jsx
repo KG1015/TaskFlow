@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const Signup = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,6 +22,7 @@ const Signup = () => {
 
     try {
       const response = await axios.post(`${API_URL}/api/auth/signup`, {
+        username,
         email,
         password,
       });
@@ -53,6 +55,20 @@ const Signup = () => {
               </div>
             )}
             
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-white">
+                What should we call you?
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Enter a profile name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="block w-full px-4 py-3 bg-spotify-black border border-spotify-highlight rounded-md text-white placeholder-spotify-text focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all sm:text-base hover:border-spotify-text"
+              />
+            </div>
+
             <div className="space-y-2">
               <label className="block text-sm font-bold text-white">
                 What's your email?

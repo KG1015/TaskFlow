@@ -111,7 +111,7 @@ const Dashboard = () => {
         {/* Header Section */}
         <div className="bg-gradient-to-b from-[#282828] to-spotify-black p-8 rounded-xl mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 shadow-2xl">
           <div>
-            <h2 className="text-5xl font-black tracking-tighter mb-2">Good morning</h2>
+            <h2 className="text-5xl font-black tracking-tighter mb-2">Welcome {user?.username || 'User'}</h2>
             <p className="text-spotify-text font-medium text-lg">
               You have {pendingTasks.length} pending task{pendingTasks.length !== 1 ? 's' : ''}.
             </p>

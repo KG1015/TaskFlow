@@ -5,6 +5,7 @@ const User = require('../models/User');
 
 const signupSchema = Joi.object({
   email: Joi.string().email().required(),
+  username: Joi.string().min(3).required(),
   password: Joi.string().min(6).required(),
 });
 
@@ -18,7 +19,7 @@ const signup = async (req, res, next) => {
     const { error } = signupSchema.validate(req.body);
     if (error) return res.status(400).json({ error: error.details[0].message });
 
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
     
     // Check if user exists
     const existingUser = await User.findOne({ where: { email } });
@@ -32,6 +33,7 @@ const signup = async (req, res, next) => {
     // Create user
     const user = await User.create({
       email,
+      username,
       password: hashedPassword,
     });
 
@@ -43,7 +45,7 @@ const signup = async (req, res, next) => {
     res.status(201).json({
       message: 'User created successfully',
       token,
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, username: user.username },
     });
   } catch (error) {
     next(error);
@@ -77,7 +79,7 @@ const login = async (req, res, next) => {
     res.status(200).json({
       message: 'Logged in successfully',
       token,
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, username: user.username },
     });
   } catch (error) {
     next(error);
