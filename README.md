@@ -21,16 +21,12 @@ A production-ready mini-SaaS Task Management application built with the PERN sta
 ### Backend
 - **Node.js & Express:** Core server framework.
 - **PostgreSQL:** Primary relational database.
-- **Sequelize:** Object-Relational Mapper (ORM) for secure database queries.
 - **JWT & bcrypt:** For authentication and password hashing.
-- **Joi:** For robust API input validation.
 
 ### Frontend
 - **React 19:** Frontend UI library.
 - **Vite:** Next-generation frontend tooling and bundler.
 - **Tailwind CSS v4:** Utility-first CSS framework for styling.
-- **Axios:** For API requests and interceptors.
-- **React Router Dom:** For client-side routing and protected routes.
 
 ---
 
